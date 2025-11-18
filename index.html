@@ -5,11 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Easy PC — Tauret Computadores</title>
   <link rel="stylesheet" href="styles.css">
-  <!-- Google font (optional, still plain CSS/HTML) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="site-bg"></div>
+  <div class="site-bg" aria-hidden="true"></div>
 
   <header class="topbar">
     <div class="brand">
@@ -34,27 +33,12 @@
         <button id="open-easypc" class="btn primary-lg">Probar Easy PC</button>
         <a class="link-like" href="#">Ver catálogo →</a>
       </div>
-      <div class="features">
-        <div class="feature">
-          <strong>Rápido</strong>
-          <span>Resultados instantáneos basados en tu presupuesto</span>
-        </div>
-        <div class="feature">
-          <strong>Personal</strong>
-          <span>Adaptado a tus juegos y software</span>
-        </div>
-        <div class="feature">
-          <strong>Profesional</strong>
-          <span>Recomendaciones justificadas técnicamente</span>
-        </div>
-      </div>
     </section>
 
     <section class="hero-right">
       <div class="pc-card">
         <div class="pc-glow"></div>
         <div class="pc-mock">
-          <!-- stylized PC illustration with CSS -->
           <div class="screen">
             <div class="screen-content">
               <span class="mono">Easy PC</span>
@@ -85,7 +69,7 @@
     </svg>
   </button>
 
-  <!-- Modal / Panel -->
+  <!-- Panel -->
   <div id="easypc-panel" class="panel hidden" role="dialog" aria-modal="true" aria-labelledby="panel-title">
     <div class="panel-header">
       <div>
@@ -96,42 +80,41 @@
     </div>
 
     <div class="panel-body">
-      <div class="progress-wrap">
+      <div class="progress-wrap" aria-hidden="true">
         <div id="progress-bar" class="progress-bar" style="--w:0%"></div>
       </div>
 
-      <form id="wizard-form" class="wizard">
-        <!-- Step templates -->
+      <form id="wizard-form" class="wizard" onsubmit="return false;">
         <div class="step" data-step="1">
           <h3 class="step-title">¿Para qué vas a usar tu PC?</h3>
-          <div class="options-grid" id="use-options">
-            <label class="pill">
-              <input type="checkbox" name="use" value="estudio"/>
+          <div class="options-grid" id="use-options" role="list">
+            <label class="pill" tabindex="0" data-value="estudio" role="listitem">
+              <input type="checkbox" name="use" value="estudio" />
               <div class="icon">📚</div>
               <div class="label">Estudio / Oficina</div>
             </label>
-            <label class="pill">
-              <input type="checkbox" name="use" value="gaming"/>
+            <label class="pill" tabindex="0" data-value="gaming" role="listitem">
+              <input type="checkbox" name="use" value="gaming" />
               <div class="icon">🎮</div>
               <div class="label">Gaming</div>
             </label>
-            <label class="pill">
-              <input type="checkbox" name="use" value="diseño"/>
+            <label class="pill" tabindex="0" data-value="diseño" role="listitem">
+              <input type="checkbox" name="use" value="diseño" />
               <div class="icon">🎨</div>
               <div class="label">Diseño / Edición</div>
             </label>
-            <label class="pill">
-              <input type="checkbox" name="use" value="programacion"/>
+            <label class="pill" tabindex="0" data-value="programacion" role="listitem">
+              <input type="checkbox" name="use" value="programacion" />
               <div class="icon">💻</div>
               <div class="label">Programación</div>
             </label>
-            <label class="pill">
-              <input type="checkbox" name="use" value="workstation"/>
+            <label class="pill" tabindex="0" data-value="workstation" role="listitem">
+              <input type="checkbox" name="use" value="workstation" />
               <div class="icon">🧮</div>
               <div class="label">Workstation</div>
             </label>
-            <label class="pill">
-              <input type="checkbox" name="use" value="entretenimiento"/>
+            <label class="pill" tabindex="0" data-value="entretenimiento" role="listitem">
+              <input type="checkbox" name="use" value="entretenimiento" />
               <div class="icon">📺</div>
               <div class="label">Multimedia / Streaming</div>
             </label>
@@ -141,9 +124,10 @@
         <div class="step" data-step="2">
           <h3 class="step-title">¿Cuál es tu presupuesto aproximado?</h3>
           <div class="budget-wrap">
-            <input id="budget-range" type="range" min="300" max="5000" step="50" value="1200">
-            <div class="budget-value"><span id="budget-value">$1,200</span></div>
-            <small class="muted">Ajusta la barra. Ej.: $300 - $5,000</small>
+            <!-- Valores en COP -->
+            <input id="budget-range" type="range" min="300000" max="5000000" step="50000" value="1200000">
+            <div class="budget-value"><span id="budget-value">$1.200.000 COP</span></div>
+            <small class="muted">Ajusta la barra. Ej.: $300.000 - $5.000.000 COP</small>
           </div>
         </div>
 
@@ -163,26 +147,17 @@
           <h3 class="step-title">¿Qué videojuegos sueles jugar?</h3>
           <div class="autocomplete">
             <input id="game-input" type="text" placeholder="Escribe un juego (ej. Valorant, Cyberpunk)"/>
-            <ul id="suggestions" class="suggestions hidden"></ul>
+            <ul id="suggestions" class="suggestions hidden" role="listbox"></ul>
           </div>
-          <div class="tags" id="games-picked"></div>
+          <div class="tags" id="games-picked" aria-live="polite"></div>
         </div>
 
         <div class="step" data-step="5">
           <h3 class="step-title">¿En qué resolución quieres jugar?</h3>
           <div class="radio-row">
-            <label class="rad">
-              <input type="radio" name="resolution" value="1080p" checked/>
-              <div>1080p</div>
-            </label>
-            <label class="rad">
-              <input type="radio" name="resolution" value="1440p"/>
-              <div>1440p</div>
-            </label>
-            <label class="rad">
-              <input type="radio" name="resolution" value="4k"/>
-              <div>4K</div>
-            </label>
+            <label class="rad"><input type="radio" name="resolution" value="1080p" checked/><div>1080p</div></label>
+            <label class="rad"><input type="radio" name="resolution" value="1440p"/><div>1440p</div></label>
+            <label class="rad"><input type="radio" name="resolution" value="4k"/><div>4K</div></label>
           </div>
         </div>
 
@@ -205,20 +180,8 @@
         <div class="step" data-step="8">
           <h3 class="step-title">¿Prefieres enfriamiento por aire o líquido?</h3>
           <div class="cards-row">
-            <label class="cooler-card">
-              <input type="radio" name="cooling" value="air" checked/>
-              <div class="card-content">
-                <div class="icon">🌬️</div>
-                <div><strong>Aire</strong><div class="muted tiny">Sencillo y económico</div></div>
-              </div>
-            </label>
-            <label class="cooler-card">
-              <input type="radio" name="cooling" value="liquid"/>
-              <div class="card-content">
-                <div class="icon">💧</div>
-                <div><strong>Líquido</strong><div class="muted tiny">Mejor overclocking y estética</div></div>
-              </div>
-            </label>
+            <label class="cooler-card"><input type="radio" name="cooling" value="air" checked/><div class="card-content"><div class="icon">🌬️</div><div><strong>Aire</strong><div class="muted tiny">Sencillo y económico</div></div></div></label>
+            <label class="cooler-card"><input type="radio" name="cooling" value="liquid"/><div class="card-content"><div class="icon">💧</div><div><strong>Líquido</strong><div class="muted tiny">Mejor overclocking y estética</div></div></div></label>
           </div>
         </div>
 
@@ -227,23 +190,25 @@
           <button type="button" id="next-btn" class="btn">Siguiente</button>
         </div>
       </form>
+    </div>
+  </div>
 
-      <!-- Results -->
-      <div id="results" class="results hidden">
-        <h3>Recomendaciones</h3>
-        <div class="recommendations" id="reco-list">
-          <!-- Three cards inserted by JS -->
-        </div>
-        <div class="results-note muted">Las opciones son simuladas para demo. Botones de compra y agenda son enlaces falsos.</div>
-        <div class="results-actions">
-          <button id="restart" class="btn ghost">Volver a empezar</button>
-          <button id="close-panel" class="btn">Cerrar</button>
-        </div>
-      </div>
-
+  <!-- Fullscreen results overlay -->
+  <div id="results-full" class="results-full hidden" role="dialog" aria-modal="true" aria-labelledby="results-title">
+    <div class="results-full-inner">
+      <header class="results-header">
+        <h2 id="results-title">Recomendaciones — Easy PC</h2>
+        <button id="results-close" class="icon-btn" aria-label="Cerrar resultados">&times;</button>
+      </header>
+      <div id="results-grid" class="results-grid" aria-live="polite"></div>
+      <footer class="results-footer">
+        <button id="results-back" class="btn ghost">Volver al formulario</button>
+        <button id="results-restart" class="btn">Reiniciar asistente</button>
+      </footer>
     </div>
   </div>
 
   <script src="script.js"></script>
 </body>
 </html>
+
